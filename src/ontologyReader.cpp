@@ -3,13 +3,12 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include <set>
 #include <iterator>
 #include <cmath>
 #include <map>
 #include <deque>
-#include "term_module.cpp"
 
 
 using namespace Rcpp;
@@ -17,15 +16,90 @@ using namespace std;
 
 
 
+class Term
+{
+public:
+  Term(std::string id, std::string name, std::string top, size_t d, bool obso, std::vector<std::string> p, std::vector<std::string> c){
+    this->id = id;
+    this->name = name;
+    this->top = top;
+    this->h_score = d;
+    this->obso = obso;
+    this->parents = p;
+    this->childrens = c;
+  }
+  bool isObsolete(){
+    return this->obso;
+  }
+  std::string getId(){
+    return this->id;
+  }
+
+  std::vector<std::string> getParent(){
+    return this->parents;
+  }
+  std::vector<std::string> getChildren(){
+    return this->childrens;
+  }
+
+  //  void setChildren(std::string child);
+  //  vec getChildren(){
+  //    return this->childrensIsA;
+  //  }
+  //  std::vector<std::string> getPOFParent();
+  //  void setPOFChildren(std::string child);
+  //  std::vector<std::string> getPOFChildren();
+  //  std::string getRegulateTerm();
+  std::string getTop(){
+    return this->top;
+  }
+  std::string getName(){
+    return this->name;
+  }
+  size_t getDepth(){
+    return this->h_score;
+  }
+  void setDescedants(std::string d){
+
+    this->descendants.push_back(d);
+
+  }
+  std::vector<std::string> getDescedants(){
+
+    return  this->descendants;
+  }
+  void setAncestors(std::string d){
+
+    this->ancestors.push_back(d);
+
+  }
+  std::vector<std::string> getAncestors(){
+
+    return  this->ancestors;
+  }
+private:
+  std::string id;
+  std::string name;
+  std::string top;
+  std::vector<std::string> parents;
+  std::vector<std::string> childrens;
+  std::vector<std::string> descendants;
+  std::vector<std::string> ancestors;
+  bool obso;
+  size_t h_score;
+};
+
+
+
 RCPP_EXPOSED_WRAP(Term);
 
 // Fill the zipped vector with pairs consisting of the
-// corresponding elements of a and b. (This assumes 
+// corresponding elements of a and b. (This assumes
 // that the vectors have equal length)
 template <typename A, typename B>
 void zip(
-    const std::vector<A> &a, 
-    const std::vector<B> &b, 
+    const std::vector<A> &a,
+    const std::vector<B> &b,
     std::vector<std::pair<A,B>> &zipped)
 {
   for(size_t i=0; i<a.size(); ++i)
@@ -34,13 +108,13 @@ void zip(
   }
 }
 
-// Write the first and second element of the pairs in 
-// the given zipped vector into a and b. (This assumes 
+// Write the first and second element of the pairs in
+// the given zipped vector into a and b. (This assumes
 // that the vectors have equal length)
 template <typename A, typename B>
 void unzip(
-    const std::vector<std::pair<A, B>> &zipped, 
-    std::vector<A> &a, 
+    const std::vector<std::pair<A, B>> &zipped,
+    std::vector<A> &a,
     std::vector<B> &b)
 {
   for(size_t i=0; i<a.size(); i++)
@@ -52,26 +126,26 @@ void unzip(
 
 void sort(std::vector<std::string>& names, std::vector<size_t>& score)
 {
-  
+
   // Zip the vectors together
   std::vector<std::pair<std::string,size_t>> zipped;
   zip(names, score, zipped);
-  
+
   // Sort the vector of pairs
-  std::sort(std::begin(zipped), std::end(zipped), 
+  std::sort(std::begin(zipped), std::end(zipped),
             [&](const std::pair<std::string,size_t>& a, const std::pair<std::string,size_t>& b)
             {
               return a.second < b.second;
             });
-  
+
   // Write the sorted pairs back to the original vectors
   unzip(zipped, names, score);
-  
+
 }
 
 void getDesc(string term, vector<string>& dsc, map<string,vector<string>>& t2child){
   vector<string> ch = t2child.at(term);
-  
+
   for(string child : ch){
     dsc.insert(dsc.end(), child);
     getDesc(child,dsc,t2child);
@@ -86,7 +160,7 @@ set<string> getDescendants(string term, map<string,vector<string>>& t2child) {
 
 void getAnc(string term, vector<string>& anc, map<string,vector<string>>& t2parent){
   vector<string> p = t2parent.at(term);
-  
+
   for(string parent : p){
     anc.insert(anc.end(), parent);
     getDesc(parent,anc,t2parent);
@@ -110,20 +184,20 @@ List reader(String go_file) {
   string token = "";
   int count = 0;
   int countTerms =0;
-  
+
   map<string, vector<string>> termId2info;
   map<string, size_t> termId2depth;
   map<string, vector<string>> termId2AltId;
   map<string, vector<string>> termId2parent;
   map<string, bool> termId2obsolete;
   map<string, vector<string>> termId2children;
-  
+
   map<string,string> namespace2root;
-  
+
   string id = "";
-  
+
   vector<string> ids;
-  
+
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
@@ -179,27 +253,27 @@ List reader(String go_file) {
             termId2obsolete.at(id)= true;
           }
         }
-        
+
     }
   }
     myfile.close();
 }
-  
+
   for(string id : ids){
     if(termId2parent.at(id).size()>0){
       for(string p : termId2parent.at(id)){
         termId2children.at(p).push_back(id);
       }
-      
+
     }else{
       if(!termId2obsolete.at(id)){
         namespace2root.insert(pair<string,string>(termId2info.at(id).at(0),id));
       }else{
-        termId2depth.insert(pair<string,size_t>(id,0)); 
+        termId2depth.insert(pair<string,size_t>(id,0));
       }
     }
   }
-  
+
   for(map<string,string>::iterator it = namespace2root.begin(); it!=namespace2root.end();it++){
     string sub = it->second;
     int flag=1;
@@ -209,7 +283,7 @@ List reader(String go_file) {
     vector<string> vec1 = vector<string>(termId2children.at(sub));
     vector<string> vec2 = vector<string>();
     while(flag==1){
-      
+
       for(string element:vec1){
         termId2depth.insert(pair<string,size_t>(element,level));
         vector<string> ch = termId2children.at(element);
@@ -225,7 +299,7 @@ List reader(String go_file) {
       }
     }
   }
-  
+
   vector<Term> vecT;
   vector<size_t> depths;
   for(string id : ids){
@@ -236,15 +310,15 @@ List reader(String go_file) {
   for(size_t i =0;i<ids.size();i++){
     id2pos.insert(pair<string,size_t>(ids.at(i),i));
   }
- // NumericMatrix matrix( ids.size(), ids.size());
+  // NumericMatrix matrix( ids.size(), ids.size());
   List alternative2id;
   for(string id : ids){
     Term t(id, termId2info.at(id).at(0),namespace2root.at(termId2info.at(id).at(1)),termId2depth.at(id),
-           termId2obsolete.at(id),termId2parent.at(id),termId2children.at(id));    
+           termId2obsolete.at(id),termId2parent.at(id),termId2children.at(id));
     vecT.push_back(t);
-    
+
     if(!termId2obsolete.at(id)){
-      
+
       for(string d : getDescendants(id,termId2children)){
         vecT.at(id2pos.at(id)).setDescedants(d);
       }
@@ -255,27 +329,26 @@ List reader(String go_file) {
         alternative2id[a] = id;
       }
     }
-    
-  }
-  
-  
-  return List::create(_["termOBJ"] = vecT,
-                            //   _["Fulladjacency"] = matrix,
-                               _["alternativeIDs"] = alternative2id,
-                               _["name"] = ids);
+
   }
 
+
+  return List::create(_["termOBJ"] = vecT,
+                      //   _["Fulladjacency"] = matrix,
+                      _["alternativeIDs"] = alternative2id,
+                      _["name"] = ids);
+  }
 
 
 
 
 RCPP_MODULE(ontology){
-  
+
   using namespace Rcpp ;
-  
+
   // function("reader", &reader);
-  
-  
+
+
   class_<Term>("Term")
     // expose the default constructor
     .constructor<std::string,std::string,std::string,size_t,bool, std::vector<std::string>, std::vector<std::string>>()
@@ -289,6 +362,7 @@ RCPP_MODULE(ontology){
     .method("getDescendants",&Term::getDescedants, "return the term id descendants of term x")
     .method("getAncestors",&Term::getAncestors, "return the term id ancestors of term x")
     ;
-  
+
 }
+
 
