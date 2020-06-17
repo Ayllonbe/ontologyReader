@@ -1,37 +1,10 @@
 #' @useDynLib ontologyReader
 #' @import Rcpp
 #' @import methods
-#'Pattern "^[[:alpha:]]+"
-
-#' @title  Get list of descendants terms
 #'
-#' @param obj List obj (created by reader function)
-#' @param term GO id character
-#' @param ordering boolean to choose if the descendants are ordered by level (from high level to low level)
-#' @return A vector object including the descendants of term.
+#' @title Get list of descendants terms but with a limited distance
 #'
-#' @examples
-#' \dontrun{
-#'
-#' data(go)
-#'
-#'
-#' getDescendats(go, "GO:0007005",ordering=TRUE)
-#' }
-getDescendants <- function(obj=NULL, term=NULL, ordering=FALSE){
-  pos <- which(obj$name%in%term)
-  t <- obj$termOBJ[[pos]]
-  desc <- t$getDescendants()
-  if(ordering){
-    return(obj$name[which(obj$name%in%desc)])
-  }else{
-    return(desc)
-  }
-}
-
-#' Get list of descendants terms but with a limited distance
-#'
-#' @param obj List obj (created by reader function)
+#' @param obj ontology R6 class
 #' @param term GO id character
 #' @param ordering boolean to choose if the descendants are ordered by level (from high level to low level)
 #' @param limit number of maximal steps for exploring the go structure.
@@ -48,9 +21,7 @@ getDescendants <- function(obj=NULL, term=NULL, ordering=FALSE){
 getDescendantsWithLimit <- function(obj=NULL, term=NULL, ordering=FALSE, limit){
   getDescendantsStep <- function(obj=NULL, term=NULL, step,limit){
     if(step<limit){
-      pos <- which(obj$name%in%term)
-      t <- obj$termOBJ[[pos]]
-      desc <- t$getChildren()
+      desc <- obj$getChildren(term)
       step1 <- step+1
 
       list.desc <- lapply(desc, function(x){
@@ -63,95 +34,19 @@ getDescendantsWithLimit <- function(obj=NULL, term=NULL, ordering=FALSE, limit){
 
   }
 
-  pos <- which(obj$name%in%term)
-  t <- obj$termOBJ[[pos]]
-  desc <- t$getChildren()
+  desc <- obj$getChildren(term)
 
   list.desc <- lapply(desc, function(x){
     return(getDescendantsStep(obj,x,1,limit))
   })
   desc <- unique(c(desc,unlist(list.desc)))
   if(ordering){
-    return(obj$name[which(obj$name%in%desc)])
+    return(obj$ids[which(obj$ids%in%desc)])
   }else{
     return(desc)
   }
 }
-
-#' Get list of ancestor terms
-#'
-#' @param obj List obj (created by reader function)
-#' @param term GO id character
-#' @param ordering boolean to choose if the ancestors are ordered by level (from high level to low level)
-#' @return A vector object including the ancestors of term.
-#'
-#' @examples
-#' \dontrun{
-#'
-#' data(go)
-#'
-#'
-#' getAncestors(go, "GO:0007005",ordering=TRUE)
-#' }
-getAncestors <- function(obj=NULL, term=NULL, ordering=FALSE){
-  pos <- which(obj$name%in%term)
-  t <- obj$termOBJ[[pos]]
-  anc <- t$getAncestors()
-  if(ordering){
-    return(obj$name[rev(which(obj$name%in%anc))])
-  }else{
-    return(anc)
-  }
-}
-
-#' Get list of parent terms
-#'
-#' @param obj List obj (created by reader function)
-#' @param term GO id character
-#' @param ordering boolean to choose if the parents are ordered by level (from high level to low level)
-#' @return A vector object including the parents of term.
-#'
-#' @examples
-#' \dontrun{
-#'
-#' data(go)
-#'
-#'
-#' getParent(go, "GO:0007005",ordering=TRUE)
-#' }
-getParent <- function(obj=NULL, term=NULL){
-  pos <- which(obj$name%in%term)
-  t <- obj$termOBJ[[pos]]
-  p <- t$getParents()
-  return(p)
-
-}
-
-#' Get list of child terms
-#'
-#' @param obj List obj (created by reader function)
-#' @param term GO id character
-#' @param ordering boolean to choose if the children are ordered by level (from high level to low level)
-#' @return A vector object including the children of term.
-#'
-#' @examples
-#' \dontrun{
-#'
-#' data(go)
-#'
-#'
-#' getChildren(go, "GO:0007005",ordering=TRUE)
-#' }
-getChildren <- function(obj=NULL, term=NULL){
-  pos <- which(obj$name%in%term)
-  t <- obj$termOBJ[[pos]]
-  c <- t$getChildren()
-  return(c)
-
-}
-
-
-#' Change the posible alternative ID of the main ID
+#' @title Change the posible alternative ID of the main ID
 #'
 #' @param obj List obj (created by reader function)
 #' @param vector GO id vector
@@ -172,6 +67,26 @@ changeAltTerm <- function(obj=NULL, vector=NULL){
   res <- obj$alternativeIDs[altv]
   vector[vpos] = unlist(res)
   return(unlist(vector))
+}
+
+#' @title Read ontology task (time-consuming)
+#'
+#' @param file obo file
+#' @return A ontoClass object.
+#'
+#' @examples
+#' \dontrun{
+#'
+#' onto <- ontologyReader("go.obo")
+#'
+#'
+#' }
+#'
+
+ontologyReader <- function(file){
+  onto <- ontologyReader::reader(file)
+  ontoCl <- ontology$new(onto)
+  return(ontoCl)
 }
 
 #' \code{ontologyReader} object encapsulating structure of the Gene Ontology (GO) comprising a \code{list} of lists/vectors of properties of GO terms indexed by term ID

@@ -5,6 +5,18 @@
 
 using namespace Rcpp;
 
+// computegoUIC
+std::vector<long double> computegoUIC(List& ontology, std::vector<std::string>& ids);
+RcppExport SEXP _ontologyReader_computegoUIC(SEXP ontologySEXP, SEXP idsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List& >::type ontology(ontologySEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string>& >::type ids(idsSEXP);
+    rcpp_result_gen = Rcpp::wrap(computegoUIC(ontology, ids));
+    return rcpp_result_gen;
+END_RCPP
+}
 // reader
 List reader(String go_file);
 RcppExport SEXP _ontologyReader_reader(SEXP go_fileSEXP) {
@@ -20,6 +32,7 @@ END_RCPP
 RcppExport SEXP _rcpp_module_boot_ontology();
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_ontologyReader_computegoUIC", (DL_FUNC) &_ontologyReader_computegoUIC, 2},
     {"_ontologyReader_reader", (DL_FUNC) &_ontologyReader_reader, 1},
     {"_rcpp_module_boot_ontology", (DL_FUNC) &_rcpp_module_boot_ontology, 0},
     {NULL, NULL, 0}

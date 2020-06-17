@@ -9,6 +9,7 @@
 #include <cmath>
 #include <map>
 #include <deque>
+#include "ontologyReader.h"
 
 
 using namespace Rcpp;
@@ -16,10 +17,7 @@ using namespace std;
 
 
 
-class Term
-{
-public:
-  Term(std::string id, std::string name, std::string top, size_t d, bool obso, std::vector<std::string> p, std::vector<std::string> c){
+Term::Term(std::string id, std::string name, std::string top, size_t d, bool obso, std::vector<std::string> p, std::vector<std::string> c){
     this->id = id;
     this->name = name;
     this->top = top;
@@ -28,66 +26,48 @@ public:
     this->parents = p;
     this->childrens = c;
   }
-  bool isObsolete(){
+  bool Term::isObsolete(){
     return this->obso;
   }
-  std::string getId(){
+  std::string Term::getId(){
     return this->id;
   }
 
-  std::vector<std::string> getParent(){
+  std::vector<std::string> Term::getParent(){
     return this->parents;
   }
-  std::vector<std::string> getChildren(){
+  std::vector<std::string> Term::getChildren(){
     return this->childrens;
   }
 
-  //  void setChildren(std::string child);
-  //  vec getChildren(){
-  //    return this->childrensIsA;
-  //  }
-  //  std::vector<std::string> getPOFParent();
-  //  void setPOFChildren(std::string child);
-  //  std::vector<std::string> getPOFChildren();
-  //  std::string getRegulateTerm();
-  std::string getTop(){
+  std::string Term::getTop(){
     return this->top;
   }
-  std::string getName(){
+  std::string Term::getName(){
     return this->name;
   }
-  size_t getDepth(){
+  size_t Term::getDepth(){
     return this->h_score;
   }
-  void setDescedants(std::string d){
+  void Term::setDescedants(std::string d){
 
     this->descendants.push_back(d);
 
   }
-  std::vector<std::string> getDescedants(){
+  std::vector<std::string> Term::getDescedants(){
 
     return  this->descendants;
   }
-  void setAncestors(std::string d){
+  void Term::setAncestors(std::string d){
 
     this->ancestors.push_back(d);
 
   }
-  std::vector<std::string> getAncestors(){
+  std::vector<std::string> Term::getAncestors(){
 
     return  this->ancestors;
   }
-private:
-  std::string id;
-  std::string name;
-  std::string top;
-  std::vector<std::string> parents;
-  std::vector<std::string> childrens;
-  std::vector<std::string> descendants;
-  std::vector<std::string> ancestors;
-  bool obso;
-  size_t h_score;
-};
+
 
 
 
@@ -312,19 +292,44 @@ List reader(String go_file) {
   }
   // NumericMatrix matrix( ids.size(), ids.size());
   List alternative2id;
+  List terms;
+
   for(string id : ids){
     Term t(id, termId2info.at(id).at(0),namespace2root.at(termId2info.at(id).at(1)),termId2depth.at(id),
            termId2obsolete.at(id),termId2parent.at(id),termId2children.at(id));
+    vector<int> chInt;
+    vector<int> parInt;
+    vector<int> ancInt;
+    vector<int> desInt;
     vecT.push_back(t);
 
     if(!termId2obsolete.at(id)){
 
+      for(string c : t.getChildren()){
+        chInt.push_back(id2pos.at(c)+1);
+      }
+      for(string p : t.getParent()){
+        parInt.push_back(id2pos.at(p)+1);
+      }
+
+
       for(string d : getDescendants(id,termId2children)){
         vecT.at(id2pos.at(id)).setDescedants(d);
+        desInt.push_back(id2pos.at(d)+1);
       }
       for(string a : getAncestors(id,termId2parent)){
         vecT.at(id2pos.at(id)).setAncestors(a);
+        ancInt.push_back(id2pos.at(a)+1);
       }
+      terms[id] = List::create(_["id"]=t.getId(),
+                               _["name"]=t.getName(),
+                               _["depth"]=t.getDepth(),
+                               _["top"]=t.getTop(),
+                               _["obsolete"]=t.isObsolete(),
+                               _["parents"]=parInt,
+                               _["children"]=chInt,
+                               _["ancestors"]=ancInt,
+                               _["descendants"]=desInt);
       for(string a : termId2AltId.at(id)){
         alternative2id[a] = id;
       }
@@ -333,7 +338,7 @@ List reader(String go_file) {
   }
 
 
-  return List::create(_["termOBJ"] = vecT,
+  return List::create(_["termOBJ"] = terms,
                       //   _["Fulladjacency"] = matrix,
                       _["alternativeIDs"] = alternative2id,
                       _["name"] = ids);
@@ -341,28 +346,26 @@ List reader(String go_file) {
 
 
 
-
-RCPP_MODULE(ontology){
-
-  using namespace Rcpp ;
-
-  // function("reader", &reader);
-
-
-  class_<Term>("Term")
-    // expose the default constructor
-    .constructor<std::string,std::string,std::string,size_t,bool, std::vector<std::string>, std::vector<std::string>>()
-    .method("isObsolete", &Term::isObsolete, "return TRUE if the term is obsolete")
-    .method("getId", &Term::getId, "return the term id")
-    .method("getName", &Term::getName, "return the term name")
-    .method("getDepth",&Term::getDepth, "return the term level in the ontology (longest path to root)")
-    .method("getTop", &Term::getTop, "return the top term")
-    .method("getParents",&Term::getParent, "return the term id parents of term x")
-    .method("getChildren",&Term::getChildren, "return the term id childrens of term x")
-    .method("getDescendants",&Term::getDescedants, "return the term id descendants of term x")
-    .method("getAncestors",&Term::getAncestors, "return the term id ancestors of term x")
-    ;
-
+ RCPP_MODULE(ontology){
+/*
+*  using namespace Rcpp ;
+*
+*  // function("reader", &reader);
+*
+*
+*  class_<Term>("Term")
+*    // expose the default constructor
+*    .constructor<std::string,std::string,std::string,size_t,bool, std::vector<std::string>, std::vector<std::string>>()
+*    .method("isObsolete", &Term::isObsolete, "return TRUE if the term is obsolete")
+*    .method("getId", &Term::getId, "return the term id")
+*    .method("getName", &Term::getName, "return the term name")
+*    .method("getDepth",&Term::getDepth, "return the term level in the ontology (longest path to root)")
+*    .method("getTop", &Term::getTop, "return the top term")
+*    .method("getParents",&Term::getParent, "return the term id parents of term x")
+*    .method("getChildren",&Term::getChildren, "return the term id childrens of term x")
+*    .method("getDescendants",&Term::getDescedants, "return the term id descendants of term x")
+*    .method("getAncestors",&Term::getAncestors, "return the term id ancestors of term x")
+*    ;
+*/
 }
-
 

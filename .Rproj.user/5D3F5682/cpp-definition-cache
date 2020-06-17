@@ -2,187 +2,226 @@
     {
         "definitions" : [
             {
-                "column" : 7,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
-                "kind" : 2,
-                "line" : 19,
-                "name" : "Term",
+                "column" : 28,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/functions.cpp",
+                "kind" : 6,
+                "line" : 20,
+                "name" : "transformRobj2Term(List &, std::vector<std::string> &)",
                 "parent_name" : "",
-                "usr" : "c:@C@Term"
+                "usr" : "c:@F@transformRobj2Term#&$@N@Rcpp@C@Vector>#VI19#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@std@N@__1@C@vector>#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#$@N@std@N@__1@C@allocator>#S4_#"
             },
             {
-                "column" : 8,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 6,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/functions.cpp",
+                "kind" : 6,
+                "line" : 48,
+                "name" : "goUniverseIC(std::string, std::map<std::string, Term> &, std::map<std::string, std::vector<long double> > &, std::string, size_t)",
+                "parent_name" : "",
+                "usr" : "c:@F@goUniverseIC#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#&$@N@std@N@__1@C@map>#S0_#$@C@Term#$@N@std@N@__1@S@less>#S0_#$@N@std@N@__1@C@allocator>#$@N@std@N@__1@S@pair>#1S0_#S5_#&$@N@std@N@__1@C@map>#S0_#$@N@std@N@__1@C@vector>#D#$@N@std@N@__1@C@allocator>#D#S6_#$@N@std@N@__1@C@allocator>#$@N@std@N@__1@S@pair>#1S0_#S11_#S0_#l#"
+            },
+            {
+                "column" : 26,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/functions.cpp",
+                "kind" : 6,
+                "line" : 85,
+                "name" : "computegoUIC(List &, std::vector<std::string> &)",
+                "parent_name" : "",
+                "usr" : "c:@F@computegoUIC#&$@N@Rcpp@C@Vector>#VI19#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@std@N@__1@C@vector>#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#$@N@std@N@__1@C@allocator>#S4_#"
+            }
+        ],
+        "file" : "/home/aaron/git/Umea/ontologyReader/src/functions.cpp",
+        "file_last_write" : 1592323463
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 14,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 31,
+                "line" : 29,
                 "name" : "isObsolete",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@isObsolete#"
             },
             {
-                "column" : 15,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 21,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 34,
+                "line" : 32,
                 "name" : "getId",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getId#"
             },
             {
-                "column" : 28,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 34,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 38,
+                "line" : 36,
                 "name" : "getParent",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getParent#"
             },
             {
-                "column" : 28,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 34,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 41,
+                "line" : 39,
                 "name" : "getChildren",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getChildren#"
             },
             {
-                "column" : 15,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 21,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 53,
+                "line" : 43,
                 "name" : "getTop",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getTop#"
             },
             {
-                "column" : 15,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 21,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 56,
+                "line" : 46,
                 "name" : "getName",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getName#"
             },
             {
-                "column" : 10,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 16,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 59,
+                "line" : 49,
                 "name" : "getDepth",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getDepth#"
             },
             {
-                "column" : 8,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 14,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 62,
+                "line" : 52,
                 "name" : "setDescedants(std::string)",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@setDescedants#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#"
             },
             {
-                "column" : 28,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 34,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 67,
+                "line" : 57,
                 "name" : "getDescedants",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getDescedants#"
             },
             {
-                "column" : 8,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 14,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 71,
+                "line" : 61,
                 "name" : "setAncestors(std::string)",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@setAncestors#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#"
             },
             {
-                "column" : 28,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "column" : 34,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 7,
-                "line" : 76,
+                "line" : 66,
                 "name" : "getAncestors",
                 "parent_name" : "Term",
                 "usr" : "c:@C@Term@F@getAncestors#"
             },
             {
                 "column" : 6,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 100,
+                "line" : 80,
                 "name" : "zip(const std::vector<A> &, const std::vector<B> &, std::vector<std::pair<A, B> > &)",
                 "parent_name" : "",
                 "usr" : "c:@FT@>2#T#Tzip#&1>@N@std@N@__1@CT>2#T#T@vector2t0.0>@N@std@N@__1@CT>1#T@allocator1S2_#&1>@N@std@N@__1@CT>2#T#T@vector2t0.1>@N@std@N@__1@CT>1#T@allocator1S6_#&>@N@std@N@__1@CT>2#T#T@vector2>@N@std@N@__1@ST>2#T#T@pair2S2_S6_>@N@std@N@__1@CT>1#T@allocator1S10_#"
             },
             {
                 "column" : 6,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 115,
+                "line" : 95,
                 "name" : "unzip(const std::vector<std::pair<A, B> > &, std::vector<A> &, std::vector<B> &)",
                 "parent_name" : "",
                 "usr" : "c:@FT@>2#T#Tunzip#&1>@N@std@N@__1@CT>2#T#T@vector2>@N@std@N@__1@ST>2#T#T@pair2t0.0t0.1>@N@std@N@__1@CT>1#T@allocator1S2_#&>@N@std@N@__1@CT>2#T#T@vector2S3_>@N@std@N@__1@CT>1#T@allocator1S3_#&>@N@std@N@__1@CT>2#T#T@vector2S4_>@N@std@N@__1@CT>1#T@allocator1S4_#"
             },
             {
                 "column" : 6,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 127,
+                "line" : 107,
                 "name" : "sort(std::vector<std::string> &, std::vector<size_t> &)",
                 "parent_name" : "",
                 "usr" : "c:@F@sort#&$@N@std@N@__1@C@vector>#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#$@N@std@N@__1@C@allocator>#S2_#&$@N@std@N@__1@C@vector>#l#$@N@std@N@__1@C@allocator>#l#"
             },
             {
                 "column" : 6,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 146,
+                "line" : 126,
                 "name" : "getDesc(string, vector<string> &, map<string, vector<string> > &)",
                 "parent_name" : "",
                 "usr" : "c:@F@getDesc#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#&$@N@std@N@__1@C@vector>#S0_#$@N@std@N@__1@C@allocator>#S0_#&$@N@std@N@__1@C@map>#S0_#S4_#$@N@std@N@__1@S@less>#S0_#$@N@std@N@__1@C@allocator>#$@N@std@N@__1@S@pair>#1S0_#S4_#"
             },
             {
                 "column" : 13,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 154,
+                "line" : 134,
                 "name" : "getDescendants(string, map<string, vector<string> > &)",
                 "parent_name" : "",
                 "usr" : "c:@F@getDescendants#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#&$@N@std@N@__1@C@map>#S0_#$@N@std@N@__1@C@vector>#S0_#$@N@std@N@__1@C@allocator>#S0_#$@N@std@N@__1@S@less>#S0_#$@N@std@N@__1@C@allocator>#$@N@std@N@__1@S@pair>#1S0_#S5_#"
             },
             {
                 "column" : 6,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 161,
+                "line" : 141,
                 "name" : "getAnc(string, vector<string> &, map<string, vector<string> > &)",
                 "parent_name" : "",
                 "usr" : "c:@F@getAnc#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#&$@N@std@N@__1@C@vector>#S0_#$@N@std@N@__1@C@allocator>#S0_#&$@N@std@N@__1@C@map>#S0_#S4_#$@N@std@N@__1@S@less>#S0_#$@N@std@N@__1@C@allocator>#$@N@std@N@__1@S@pair>#1S0_#S4_#"
             },
             {
                 "column" : 13,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 169,
+                "line" : 149,
                 "name" : "getAncestors(string, map<string, vector<string> > &)",
                 "parent_name" : "",
                 "usr" : "c:@F@getAncestors#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#&$@N@std@N@__1@C@map>#S0_#$@N@std@N@__1@C@vector>#S0_#$@N@std@N@__1@C@allocator>#S0_#$@N@std@N@__1@S@less>#S0_#$@N@std@N@__1@C@allocator>#$@N@std@N@__1@S@pair>#1S0_#S5_#"
             },
             {
                 "column" : 6,
-                "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
                 "kind" : 6,
-                "line" : 179,
+                "line" : 159,
                 "name" : "reader(Rcpp::String)",
                 "parent_name" : "",
                 "usr" : "c:@F@reader#$@N@Rcpp@C@String#"
             }
         ],
-        "file" : "/home/aaron/git/Umea/ontologyReader2/src/ontologyReader.cpp",
-        "file_last_write" : 1588172665
+        "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
+        "file_last_write" : 1592318701
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 7,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.h",
+                "kind" : 2,
+                "line" : 6,
+                "name" : "Term",
+                "parent_name" : "",
+                "usr" : "c:@C@Term"
+            }
+        ],
+        "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.h",
+        "file_last_write" : 1592307574
     }
 ]

@@ -7,7 +7,7 @@
 getDescendantsWithLimit(obj = NULL, term = NULL, ordering = FALSE, limit)
 }
 \arguments{
-\item{obj}{List obj (created by reader function)}
+\item{obj}{ontology R6 class}
 
 \item{term}{GO id character}
 
