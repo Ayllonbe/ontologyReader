@@ -321,6 +321,7 @@ List reader(String go_file) {
         vecT.at(id2pos.at(id)).setAncestors(a);
         ancInt.push_back(id2pos.at(a)+1);
       }
+
       terms[id] = List::create(_["id"]=t.getId(),
                                _["name"]=t.getName(),
                                _["depth"]=t.getDepth(),

@@ -17,7 +17,7 @@ using namespace Rcpp;
 //
 
 
-std::map<std::string,Term> transformRobj2Term(List& ontology,std::vector<std::string>& ids){
+std::map<std::string,Term> transformRobj2Term(List ontology,std::vector<std::string>& ids){
   std::map<std::string,Term> str2Term;
   for(std::string id:ids){
     if(ontology.containsElementNamed(id.c_str())){

@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{ontologyReader}
 \alias{ontologyReader}
-\title{Read ontology task}
+\title{Read ontology task (time-consuming)}
 \usage{
 ontologyReader(file)
 }
@@ -13,7 +13,7 @@ ontologyReader(file)
 A ontoClass object.
 }
 \description{
-Read ontology task
+Read ontology task (time-consuming)
 }
 \examples{
 \dontrun{
