@@ -1,12 +1,13 @@
 Package: ontologyReader
 Type: Package
-Title: What the Package Does in One 'Title Case' Line
-Version: 1.0
+Title: A new approach to read ontologies in R
+Version: 1.0.1
 Date: 2020-04-29
-Author: Your Name
-Maintainer: Your Name <your@email.com>
-Description: One paragraph description of what the package does as one or more full
-          sentences.
+Author: Aaron A.B. [aut, cre],
+	Nicolas D. [aut],
+	Nathaniel S. [aut]
+Maintainer: Aaron A.B. <ayllonbenitez.aaron@gmail.com>
+Description: to describe asap.
 License: GPL (>= 2)
 Imports: methods, Rcpp (>= 1.0.4), R6 (>= 2.4.1)
 LinkingTo: Rcpp

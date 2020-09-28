@@ -177,6 +177,7 @@ List reader(String go_file) {
   string id = "";
 
   vector<string> ids;
+  vector<bool> obsolet;
 
   if (myfile.is_open())
   {
@@ -295,6 +296,7 @@ List reader(String go_file) {
   List terms;
 
   for(string id : ids){
+    obsolet.push_back(termId2obsolete.at(id));
     Term t(id, termId2info.at(id).at(0),namespace2root.at(termId2info.at(id).at(1)),termId2depth.at(id),
            termId2obsolete.at(id),termId2parent.at(id),termId2children.at(id));
     vector<int> chInt;
@@ -342,6 +344,7 @@ List reader(String go_file) {
   return List::create(_["termOBJ"] = terms,
                       //   _["Fulladjacency"] = matrix,
                       _["alternativeIDs"] = alternative2id,
+                      _["obsolete"] = obsolet,
                       _["name"] = ids);
   }
 
