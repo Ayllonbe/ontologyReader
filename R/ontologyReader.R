@@ -1,6 +1,5 @@
 #' @exportPattern ^[[:alpha:]]+
 #' @import Rcpp
-#' @import methods
 #' @useDynLib ontologyReader
 #' @title Get list of descendants terms but with a limited distance
 #'
