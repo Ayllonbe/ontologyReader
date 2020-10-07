@@ -95,6 +95,15 @@ ontology <- R6Class("ontology", public = list(
     return(private$ics[which(self$ids==term)])
   },
   #' @description
+  #' To extract non-obsolete GO terms.
+  #'
+  #' @return vector of GO terms.
+  no_obs_ids = function() {
+    df <- data.frame("goid"=self$ids, "obsolete"=private$obsolete)
+    df <- df[df$obsolete!=TRUE,]
+    return(as.character(df$goid))
+  },
+  #' @description
   #' To extract the information content (IC) presented by Mazandu and Mulder (2013) for all GO terms.
   #'
   #' @return IC value of the given term.
@@ -112,6 +121,13 @@ ontology <- R6Class("ontology", public = list(
   #' @return top term.
   top=function(term){
     return(private$termobj[[term]]$top)
+  },
+  #' @description
+  #' To retrieve the complete List of GO terms information.
+  #'
+  #' @return List of GO term information.
+  getTermObj=function(){
+    return(private$termobj)
   },
   #' @description
   #' To extract term name.

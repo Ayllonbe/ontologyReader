@@ -9,3 +9,7 @@ reader <- function(go_file) {
     .Call('_ontologyReader_reader', PACKAGE = 'ontologyReader', go_file)
 }
 
+gs2 <- function(setOfGenes, annotation, ontology) {
+    .Call('_ontologyReader_gs2', PACKAGE = 'ontologyReader', setOfGenes, annotation, ontology)
+}
+
