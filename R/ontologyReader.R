@@ -89,6 +89,20 @@ ontologyReader <- function(file){
   return(ontoCl)
 }
 
+#' @title Compute GS2 (time-consuming)
+#'
+#' @param geneset vector string including genes
+#' @param annotation List including a vector of GO terms for each gene
+#' @param go gene Ontology object
+#' @return numerical value.
+#'
+#'
+
+GS2 <- function(geneset,annotaton,go){
+  gs2 <- ontologyReader::gs2(geneset,annotation,go)
+  return(gs2)
+}
+
 #' \code{ontologyReader} object encapsulating structure of the Gene Ontology (GO) comprising a \code{list} of lists/vectors of properties of GO terms indexed by term ID
 #' GO version (Downloaded 04/2020)
 #'
