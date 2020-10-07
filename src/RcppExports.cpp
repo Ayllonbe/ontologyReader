@@ -28,12 +28,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// gs2
+double gs2(StringVector& setOfGenes, List& annotation, Environment& ontology);
+RcppExport SEXP _ontologyReader_gs2(SEXP setOfGenesSEXP, SEXP annotationSEXP, SEXP ontologySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< StringVector& >::type setOfGenes(setOfGenesSEXP);
+    Rcpp::traits::input_parameter< List& >::type annotation(annotationSEXP);
+    Rcpp::traits::input_parameter< Environment& >::type ontology(ontologySEXP);
+    rcpp_result_gen = Rcpp::wrap(gs2(setOfGenes, annotation, ontology));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 RcppExport SEXP _rcpp_module_boot_ontology();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ontologyReader_computegoUIC", (DL_FUNC) &_ontologyReader_computegoUIC, 2},
     {"_ontologyReader_reader", (DL_FUNC) &_ontologyReader_reader, 1},
+    {"_ontologyReader_gs2", (DL_FUNC) &_ontologyReader_gs2, 3},
     {"_rcpp_module_boot_ontology", (DL_FUNC) &_rcpp_module_boot_ontology, 0},
     {NULL, NULL, 0}
 };

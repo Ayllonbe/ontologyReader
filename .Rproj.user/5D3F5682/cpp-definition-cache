@@ -204,10 +204,19 @@
                 "name" : "reader(Rcpp::String)",
                 "parent_name" : "",
                 "usr" : "c:@F@reader#$@N@Rcpp@C@String#"
+            },
+            {
+                "column" : 8,
+                "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
+                "kind" : 6,
+                "line" : 377,
+                "name" : "gs2(StringVector &, List &, Environment &)",
+                "parent_name" : "",
+                "usr" : "c:@F@gs2#&$@N@Rcpp@C@Vector>#VI16#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Vector>#VI19#@N@Rcpp@CT>1#T@PreserveStorage#&$@N@Rcpp@C@Environment_Impl>#@N@Rcpp@CT>1#T@PreserveStorage#"
             }
         ],
         "file" : "/home/aaron/git/Umea/ontologyReader/src/ontologyReader.cpp",
-        "file_last_write" : 1601303257
+        "file_last_write" : 1601990726
     },
     {
         "definitions" : [
