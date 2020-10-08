@@ -374,11 +374,14 @@ List reader(String go_file) {
 }
 
 // [[Rcpp::export]]
-double gs2(StringVector &setOfGenes, List &annotation, Environment &ontology) {
+double gs2(StringVector &setOfGenes , List &annotation, Environment &ontology) {
   // More information how use R6Class: https://gallery.rcpp.org/articles/handling-R6-objects-in-rcpp/
   Function ancs = ontology["ancestors"];
   unordered_map<string,unordered_set<string>> term2genes;
+  StringVector SetOfAnnotatedGenes;
   for(String g : setOfGenes){
+    if(annotation.containsElementNamed(g.get_cstring())){
+      SetOfAnnotatedGenes.push_back(g);
     StringVector terms = annotation[g];
     for(String id : terms){
     StringVector sv = ancs(id);
@@ -390,10 +393,11 @@ double gs2(StringVector &setOfGenes, List &annotation, Environment &ontology) {
         term2genes.at(e.get_cstring()).insert(g);
     }
     }
+    }
   }
     double H = ((double)setOfGenes.size())-1.;
     double comp = 0.;
-    for(String g : setOfGenes){
+    for(String g : SetOfAnnotatedGenes){
       StringVector terms = annotation[g];
       double ts = (double) terms.size();
       double sum = 0.;
