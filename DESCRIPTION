@@ -9,8 +9,8 @@ Author: Aaron A.B. [aut, cre],
 Maintainer: Aaron A.B. <ayllonbenitez.aaron@gmail.com>
 Description: to describe asap.
 License: GPL (>= 2)
-Imports: methods, Rcpp (>= 1.0.4), R6 (>= 2.4.1)
+Imports: methods, Rcpp (>= 1.0.4), R6 (>= 2.4.1), curl (>= 4.3)
 LinkingTo: Rcpp
 Depends: Rcpp, R6
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8

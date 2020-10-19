@@ -105,7 +105,7 @@ ontology <- R6Class("ontology", public = list(
   },
   #' @description
   #' To extract the information content (IC) presented by Mazandu and Mulder (2013) for all GO terms.
-  #'
+  #' @param despreciateObso boolean to extract the IC of all of non-obsolete terms (obsolete term IC value is 0).\cr
   #' @return IC value of the given term.
   all_ic = function(despreciateObso=TRUE) {
     df <- data.frame("goid"=self$ids, "ics"=private$ics, "obsolete"=private$obsolete)

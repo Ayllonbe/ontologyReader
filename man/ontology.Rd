@@ -28,8 +28,10 @@ Ontology term information: name, depth, information content, and taxonomy relati
 \item \href{#method-descendants}{\code{ontology$descendants()}}
 \item \href{#method-depth}{\code{ontology$depth()}}
 \item \href{#method-ic}{\code{ontology$ic()}}
+\item \href{#method-no_obs_ids}{\code{ontology$no_obs_ids()}}
 \item \href{#method-all_ic}{\code{ontology$all_ic()}}
 \item \href{#method-top}{\code{ontology$top()}}
+\item \href{#method-getTermObj}{\code{ontology$getTermObj()}}
 \item \href{#method-name}{\code{ontology$name()}}
 \item \href{#method-clone}{\code{ontology$clone()}}
 }
@@ -191,14 +193,34 @@ IC value of the given term.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-no_obs_ids"></a>}}
+\if{latex}{\out{\hypertarget{method-no_obs_ids}{}}}
+\subsection{Method \code{no_obs_ids()}}{
+To extract non-obsolete GO terms.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ontology$no_obs_ids()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+vector of GO terms.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-all_ic"></a>}}
 \if{latex}{\out{\hypertarget{method-all_ic}{}}}
 \subsection{Method \code{all_ic()}}{
 To extract the information content (IC) presented by Mazandu and Mulder (2013) for all GO terms.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ontology$all_ic()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ontology$all_ic(despreciateObso = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{despreciateObso}}{boolean to extract the IC of all of non-obsolete terms (obsolete term IC value is 0).\cr}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 IC value of the given term.
 }
@@ -221,6 +243,19 @@ To extract the top term associated to the given term.
 }
 \subsection{Returns}{
 top term.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getTermObj"></a>}}
+\if{latex}{\out{\hypertarget{method-getTermObj}{}}}
+\subsection{Method \code{getTermObj()}}{
+To retrieve the complete List of GO terms information.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ontology$getTermObj()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+List of GO term information.
 }
 }
 \if{html}{\out{<hr>}}

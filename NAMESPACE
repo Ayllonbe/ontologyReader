@@ -3,6 +3,7 @@
 exportPattern("^[[:alpha:]]+")
 import(R6)
 import(Rcpp)
+import(curl)
 import(methods)
 importFrom(Rdpack,reprompt)
 useDynLib(ontologyReader)
