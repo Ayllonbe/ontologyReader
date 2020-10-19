@@ -1,7 +1,7 @@
 Package: ontologyReader
 Type: Package
 Title: A new approach to read ontologies in R
-Version: 1.0.2
+Version: 1.0.3
 Date: 2020-04-29
 Author: Aaron A.B. [aut, cre],
 	Nicolas D. [aut],
