@@ -5,6 +5,10 @@ computegoUIC <- function(ontology, ids) {
     .Call('_ontologyReader_computegoUIC', PACKAGE = 'ontologyReader', ontology, ids)
 }
 
+readerString <- function(s) {
+    .Call('_ontologyReader_readerString', PACKAGE = 'ontologyReader', s)
+}
+
 reader <- function(go_file) {
     .Call('_ontologyReader_reader', PACKAGE = 'ontologyReader', go_file)
 }

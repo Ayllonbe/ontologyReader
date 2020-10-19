@@ -17,6 +17,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// readerString
+List readerString(String s);
+RcppExport SEXP _ontologyReader_readerString(SEXP sSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< String >::type s(sSEXP);
+    rcpp_result_gen = Rcpp::wrap(readerString(s));
+    return rcpp_result_gen;
+END_RCPP
+}
 // reader
 List reader(String go_file);
 RcppExport SEXP _ontologyReader_reader(SEXP go_fileSEXP) {
@@ -46,6 +57,7 @@ RcppExport SEXP _rcpp_module_boot_ontology();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ontologyReader_computegoUIC", (DL_FUNC) &_ontologyReader_computegoUIC, 2},
+    {"_ontologyReader_readerString", (DL_FUNC) &_ontologyReader_readerString, 1},
     {"_ontologyReader_reader", (DL_FUNC) &_ontologyReader_reader, 1},
     {"_ontologyReader_gs2", (DL_FUNC) &_ontologyReader_gs2, 3},
     {"_rcpp_module_boot_ontology", (DL_FUNC) &_rcpp_module_boot_ontology, 0},

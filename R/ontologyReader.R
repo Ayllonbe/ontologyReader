@@ -84,7 +84,17 @@ changeAltTerm <- function(obj=NULL, vector=NULL){
 #'
 
 ontologyReader <- function(file){
+  http <- grep("http://",file)
+  ftp <- grep("ftp://",file)
+  onto <- c()
+  if(http || ftp){
+    con <- curl(file)
+    d <- readLines(con)
+    fstr <- paste(d,collapse = "\n")
+    onto <- ontologyReader::readerString(fstr)
+  }else{
   onto <- ontologyReader::reader(file)
+  }
   ontoCl <- ontology$new(onto)
   return(ontoCl)
 }

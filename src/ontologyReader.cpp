@@ -1,4 +1,7 @@
 #include <Rcpp.h>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -153,7 +156,197 @@ set<string> getAncestors(string term, map<string,vector<string>>& t2parent) {
   return s;
 }
 
+// [[Rcpp::export]]
+List readerString(String s) {
+  std::stringstream ss(s);
+  std::string line;
 
+
+  Rcout <<fixed << setprecision(14)<<"Charging the ontology\n";
+  string delimiter = ":";
+  string token = "";
+  int count = 0;
+  int countTerms =0;
+
+  map<string, vector<string>> termId2info;
+  map<string, size_t> termId2depth;
+  map<string, vector<string>> termId2AltId;
+  map<string, vector<string>> termId2parent;
+  map<string, bool> termId2obsolete;
+  map<string, vector<string>> termId2children;
+
+  map<string,string> namespace2root;
+
+  string id = "";
+
+  vector<string> ids;
+  vector<bool> obsolet;
+  while ( getline (ss,line) )
+  {
+    if(line==""){
+      token=line;
+      id="";
+    }
+    if(line=="[Term]"){
+      token=line;
+      continue;
+    }
+    if(token=="[Term]") {
+      string key = line.substr(0, line.find(delimiter));
+      string val = line.substr(line.find(delimiter)+2,line.size());
+      if(key=="id"){
+        id = val;
+        ids.push_back(val);
+        termId2info.insert(pair<string,vector<string>>(id,vector<string>()));
+        termId2AltId.insert(pair<string,vector<string>>(id,vector<string>()));
+        termId2parent.insert(pair<string,vector<string>>(id,vector<string>()));
+        termId2children.insert(pair<string,vector<string>>(id,vector<string>()));
+        termId2obsolete.insert(pair<string,bool>(id,false));
+      }else if(key=="name"){
+        termId2info.at(id).push_back(val);
+      }else if(key=="is_a"){
+        string delimiter = " ! ";
+        string rel = val.substr(0, val.find(delimiter));
+        termId2parent.at(id).push_back(rel);
+      }/*else if(key=="relationship"){
+ string delimiter = " ! ";
+ string rel = val.substr(0, val.find(delimiter));
+ val =  rel.substr( rel.find(" ")+1,rel.size());
+ rel = rel.substr(0,rel.find(" "));
+ if(rel=="part_of"){
+ part_of.parents.push_back(val);
+ }else if(rel=="regulates"){
+ reg=val;
+ }else if(rel=="positively_regulates"){
+ positive_reg=val;
+ }else if(rel=="negatively_regulates"){
+ negative_reg = val;
+ }
+      }*/
+      else if(key =="alt_id"){
+        termId2AltId.at(id).push_back(val);
+      }
+      else if(key=="namespace"){
+        termId2info.at(id).push_back(val);
+      }
+      else if(key=="is_obsolete"){
+        if(val=="true"){
+          termId2obsolete.at(id)= true;
+        }
+      }
+
+    }
+  }
+
+
+
+for(string id : ids){
+  if(termId2parent.at(id).size()>0){
+    for(string p : termId2parent.at(id)){
+      termId2children.at(p).push_back(id);
+    }
+
+  }else{
+    if(!termId2obsolete.at(id)){
+      namespace2root.insert(pair<string,string>(termId2info.at(id).at(0),id));
+    }else{
+      termId2depth.insert(pair<string,size_t>(id,0));
+    }
+  }
+}
+
+for(map<string,string>::iterator it = namespace2root.begin(); it!=namespace2root.end();it++){
+  string sub = it->second;
+  int flag=1;
+  size_t level = 0;
+  termId2depth.insert(pair<string,size_t>(sub,level));
+  level++;
+  vector<string> vec1 = vector<string>(termId2children.at(sub));
+  vector<string> vec2 = vector<string>();
+  while(flag==1){
+
+    for(string element:vec1){
+      termId2depth.insert(pair<string,size_t>(element,level));
+      vector<string> ch = termId2children.at(element);
+      vec2.insert(vec2.end(),ch.begin(),ch.end());
+    }
+    vec1.clear();
+    if(vec2.size()>0){
+      vec1.insert(vec1.end(),vec2.begin(),vec2.end());
+      vec2.clear();
+      level++;
+    }else {
+      flag=0;
+    }
+  }
+}
+
+vector<Term> vecT;
+vector<size_t> depths;
+for(string id : ids){
+  depths.push_back(termId2depth.at(id));
+}
+sort(ids,depths);
+map<string,size_t> id2pos;
+for(size_t i =0;i<ids.size();i++){
+  id2pos.insert(pair<string,size_t>(ids.at(i),i));
+}
+// NumericMatrix matrix( ids.size(), ids.size());
+List alternative2id;
+List terms;
+
+for(string id : ids){
+  obsolet.push_back(termId2obsolete.at(id));
+  Term t(id, termId2info.at(id).at(0),namespace2root.at(termId2info.at(id).at(1)),termId2depth.at(id),
+         termId2obsolete.at(id),termId2parent.at(id),termId2children.at(id));
+  vector<int> chInt;
+  vector<int> parInt;
+  vector<int> ancInt;
+  vector<int> desInt;
+  vecT.push_back(t);
+
+  if(!termId2obsolete.at(id)){
+
+    for(string c : t.getChildren()){
+      chInt.push_back(id2pos.at(c)+1);
+    }
+    for(string p : t.getParent()){
+      parInt.push_back(id2pos.at(p)+1);
+    }
+
+
+    for(string d : getDescendants(id,termId2children)){
+      vecT.at(id2pos.at(id)).setDescedants(d);
+      desInt.push_back(id2pos.at(d)+1);
+    }
+    for(string a : getAncestors(id,termId2parent)){
+      vecT.at(id2pos.at(id)).setAncestors(a);
+      ancInt.push_back(id2pos.at(a)+1);
+    }
+
+    terms[id] = List::create(_["id"]=t.getId(),
+                             _["name"]=t.getName(),
+                             _["depth"]=t.getDepth(),
+                             _["top"]=t.getTop(),
+                             _["obsolete"]=t.isObsolete(),
+                             _["parents"]=parInt,
+                             _["children"]=chInt,
+                             _["ancestors"]=ancInt,
+                             _["descendants"]=desInt);
+    for(string a : termId2AltId.at(id)){
+      alternative2id[a] = id;
+    }
+  }
+
+}
+
+
+return List::create(_["termOBJ"] = terms,
+                    //   _["Fulladjacency"] = matrix,
+                    _["alternativeIDs"] = alternative2id,
+                    _["obsolete"] = obsolet,
+                    _["name"] = ids);
+}
 
 // [[Rcpp::export]]
 List reader(String go_file) {

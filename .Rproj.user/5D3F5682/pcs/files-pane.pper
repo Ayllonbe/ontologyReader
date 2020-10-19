@@ -1,9 +1,9 @@
 {
-    "path" : "~/git/Umea/ontologyReader",
-    "sortOrder" : [
+    "path": "~/git/Umea/ontologyReader/R",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "columnIndex": 2,
+            "ascending": true
         }
     ]
 }
