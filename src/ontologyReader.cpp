@@ -157,8 +157,8 @@ set<string> getAncestors(string term, map<string,vector<string>>& t2parent) {
 }
 
 // [[Rcpp::export]]
-List readerString(String s) {
-  std::stringstream ss(s);
+List readerString(String go_url) {
+  std::stringstream ss(go_url);
   std::string line;
 
 

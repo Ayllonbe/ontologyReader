@@ -18,13 +18,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // readerString
-List readerString(String s);
-RcppExport SEXP _ontologyReader_readerString(SEXP sSEXP) {
+List readerString(String go_url);
+RcppExport SEXP _ontologyReader_readerString(SEXP go_urlSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< String >::type s(sSEXP);
-    rcpp_result_gen = Rcpp::wrap(readerString(s));
+    Rcpp::traits::input_parameter< String >::type go_url(go_urlSEXP);
+    rcpp_result_gen = Rcpp::wrap(readerString(go_url));
     return rcpp_result_gen;
 END_RCPP
 }

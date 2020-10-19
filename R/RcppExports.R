@@ -5,8 +5,8 @@ computegoUIC <- function(ontology, ids) {
     .Call('_ontologyReader_computegoUIC', PACKAGE = 'ontologyReader', ontology, ids)
 }
 
-readerString <- function(s) {
-    .Call('_ontologyReader_readerString', PACKAGE = 'ontologyReader', s)
+readerString <- function(go_url) {
+    .Call('_ontologyReader_readerString', PACKAGE = 'ontologyReader', go_url)
 }
 
 reader <- function(go_file) {
